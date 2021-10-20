@@ -6,7 +6,6 @@
 class Deck {
     constructor(deck = null, suits = ['Spades', 'Hearts', 'Clubs', 'Diamonds'], faces = ['A','2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']) {
         this.deck = []
-        this.piles = []
 
         // Loop through the suits
         if(deck === null) {
@@ -41,36 +40,36 @@ class Deck {
 
         return firstCard
     }
-
+}
     // Generate a new hand
-    makeNewPile(numOfCards, handName = null) {
-        // Loop through numOfCards
-        let cards = []
-        for(let i = 0; i < numOfCards; i++) {
-            // Make new array pulling cards from deck and pushing to array
-            cards.push(this.removeFirstCard(this.deck))
-        }
-        // Call the Pile class and pass array
-        let hand = new Pile(cards, handName)
-        
-        this.piles.push(hand)
-
-        return hand
+class Hand{
+    constructor(){
+        this.hand = []
     }
+
+    CardsInHand(hand) {
+        for(let x = 0; x < hand.length; x++)
+            console.log(this.hand[x])
+    }
+    DrawFirstCard(deck) {
+        // Return the first card
+
+        this.hand.push(deck[0]) 
+
+        for(let i = 0; i < deck.length; i++) {
+            deck[i] = deck[i + 1]
+        }
+
+        deck.length = deck.length - 1
+
+    }
+}
 
     // Add to front
 
     // Write a method that searches and returns a specific card
-}
-
-class Pile extends Deck {
-    constructor(cards, handName) {
-        super(cards)
-        this.hand = handName
-    }
 
     // Pile methods
-}
 
 class Card {
     constructor(suit, face) {
@@ -79,11 +78,10 @@ class Card {
     }
 }
 
-let cardDeck = new Deck(null, ['Spades', 'Spades', 'Spades', 'Spades'])
+let cardDeck = new Deck()
 
-let jonathanHand = cardDeck.makeNewPile(5, `Jonathan's Hand`)
-
-jonathanHand.makeNewPile(2, `Jonathan's Discard Pile`)
+let jonathanHand = new Hand()
 
 console.log(cardDeck)
-console.log(jonathanHand)
+jonathanHand.DrawFirstCard(cardDeck)
+console.log(jonathanHand.CardsInHand())
